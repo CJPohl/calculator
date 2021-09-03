@@ -1,0 +1,87 @@
+:root {
+    --primary-background: #566573;
+    --primary-calc: #1C2833;
+    --primary-button: #33CC00;
+}
+
+html { /* for footer support! */
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: var(--primary-background);
+    margin-bottom: 100px;
+}
+
+.header {
+    padding: 50px 0;
+}
+
+.title {
+    text-align: center;
+    font-size: 70px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    font-size: 18px;
+}
+
+.fa-github {
+    color: var(--primary-button);
+    font-size: 40px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.fa-github:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 1200px) {
+    .main {
+      justify-content: center;
+    }
+}
+  
+@media (max-width: 850px) {
+.main {
+    gap: 50px;
+}
+
+.settings {
+    width: 150px;
+    gap: 16px;
+}
+
+.pick-size {
+    margin-bottom: -4px;
+}
+
+.container {
+    width: 400px;
+    height: 400px;
+}
+}
+
+@media (max-width: 650px) {
+.title {
+    font-size: 50px;
+}
+
+.main {
+    flex-direction: column-reverse;
+}
+
+.container {
+    width: 300px;
+    height: 300px;
+}
+}
