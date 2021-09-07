@@ -3,6 +3,10 @@
     --primary-calc: #1C2833;
     --primary-button: #58b838;
     --secondary-button: #b89a38;
+    --tertiary-button: #3874b8;
+    --primary-button-border:#50a832;
+    --secondary-button-border:#aa8e31;
+    --tertiary-button-border: #3368a5;
     --primary-text: #58b838;
     --secondary-text: white;
     --primary-calcseparator: #233241;
@@ -26,7 +30,7 @@ button {
     width: 100%;
     padding: 20px;
     border-radius: 50%;
-    border: 1px solid ;
+    border: 4px solid var(--primary-button-border);
     background-color: var(--primary-button);
     color: var(--secondary-text);
     font-family: inherit;
@@ -38,7 +42,7 @@ button {
 }
 
 .header {
-    padding: 45px 0;
+    padding: 20px 0;
 }
 
 .title {
@@ -98,13 +102,23 @@ button {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    margin-top: 15px;
+    margin-top: 20px;
     gap: 25px;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.nonnumber {
+    background-color: var(--tertiary-button);
+    border: 4px solid var(--tertiary-button-border);
 }
 
 #clear {
     width: 100%;
     border-radius: 50%;
+    border: 4px solid var(--secondary-button-border);
     grid-column: 1 / span 2;
     background-color: var(--secondary-button);
 }
@@ -112,6 +126,7 @@ button {
 #zero {
     width: 100%;
     border-radius: 50%;
+    border: 4px solid var(--secondary-button-border);
     grid-column: 1 / span 2;
     background-color: var(--secondary-button);
 }
