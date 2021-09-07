@@ -91,6 +91,9 @@ button {
 }
 
 .dashboard {
+    display: flex;
+    justify-content: right;
+    align-items: center;
     height: 80px;
     width: 460px;
     background-color: var(--primary-dashboard);
@@ -98,6 +101,11 @@ button {
     
 }
 
+.screen {
+    font-family: inherit;
+    color: var(--secondary-text);
+    font-size: 50px;
+}
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -106,9 +114,13 @@ button {
     gap: 25px;
 }
 
-button:hover {
-    transform: scale(1.1);
+button.clicked {
+    transform: scale(0.8);
 }
+
+/*button:hover {
+    transform: scale(1.1);
+}*/
 
 .nonnumber {
     background-color: var(--tertiary-button);
