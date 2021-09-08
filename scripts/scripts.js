@@ -3,6 +3,9 @@ const DEFAULT_SCREEN = '0';
 
 let currentScreen = DEFAULT_SCREEN;
 let operation;
+let previousValue;
+let currentValue;
+let currentOperator;
 
 // global variables
 const clearBtn = document.getElementById('clear');
@@ -24,6 +27,7 @@ const zeroBtn = document.getElementById('zero');
 const decimalBtn = document.getElementById('decimal');
 const equalsBtn = document.getElementById('equals');
 const buttons = document.querySelectorAll('.buttons');
+const operators = document.querySelectorAll('.operator');
 
 const dashboard = document.querySelector('.dashboard');
 const screen = document.createElement('div');
@@ -58,6 +62,7 @@ function updateScreen() { // function to update screen when new numbers are adde
 
 function changeQuality() {
     if (currentScreen.includes('-') == false) {
+        currentScreen = currentScreen.replace('0', '');
         currentScreen = currentScreen.slice(0, 0) + '-' + currentScreen;
     }
     else {
@@ -66,27 +71,82 @@ function changeQuality() {
     updateScreen();
 }
 
+function storePrevValue() {
+    previousValue = currentScreen;
+    if (currentScreen == ' ') {
+        operate();
+    }
+    clearScreen();
+}
+
+function storeCurrValue() {
+    currentValue = currentScreen;
+    operate();
+}
+
+function clearCurrValue() {
+    currentValue = ' ';
+}
+
+function updateVariables() {
+    previousValue = currentScreen;
+    clearCurrValue();
+}
+
+function setCurrentOperator(e) {
+    currentOperator = e.target.id;
+}
+
+function operate() {
+    if (currentOperator == 'divide') {
+        divide(previousValue, currentValue);
+    }
+    if (currentOperator == 'multiply') {
+        multiply(previousValue, currentValue);
+    }
+    if (currentOperator == 'subtract') {
+        subtract(previousValue, currentValue);
+    }
+    if (currentOperator == 'add') {
+        add(previousValue, currentValue);
+    }
+}
+
+
+
 function divide(a, b) {
-    operation = a / b;
-    currentScreen = operation;
-    updateScreen();
+    if (b == '0') {
+        currentScreen = 'Error';
+        updateScreen();
+    }
+    else {
+        operation = a / b;
+        toString(operation);  
+    }
 }
 
 function multiply(a, b) {
     operation = a * b;
-    currentScreen = operation;
-    updateScreen();
+    toString(operation);
 }
 
 function subtract(a, b) {
     operation = a - b;
-    currentScreen = operation;
-    updateScreen();
+    toString(operation);
 }
 
 function add(a, b) {
+    a = parseInt(a);
+    b = parseInt(b);
     operation = a + b;
+    toString(operation);
+}
+
+function toString(operation) {
+    operation = Math.round(operation*1000000000000)/1000000000000;
+    operation = operation.toString();
     currentScreen = operation;
+    updateVariables();
     updateScreen();
 }
 
@@ -172,6 +232,9 @@ window.onload = function() {
     threeBtn.addEventListener('click', update3);
     zeroBtn.addEventListener('click', update0);
     decimalBtn.addEventListener('click', updateDecimal);
+    equalsBtn.addEventListener('click', storeCurrValue);
     buttons.forEach(button => button.addEventListener('click', clickButton));
+    operators.forEach(operator => operator.addEventListener('click', storePrevValue));
+    operators.forEach(operator => operator.addEventListener('click', setCurrentOperator));
     createScreen();
 }
