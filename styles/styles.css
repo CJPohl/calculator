@@ -13,7 +13,6 @@
     --primary-dashboard: #24303b;
 }
 
-
 html { /* for footer support! */
     position: relative;
     min-height: 100%;
@@ -79,6 +78,7 @@ button {
     margin: 0 auto;
     background-color: var(--primary-calcseparator);
 }
+
 .calcbottom {
     display: flex;
     justify-content: center;
@@ -106,6 +106,7 @@ button {
     color: var(--secondary-text);
     font-size: 50px;
 }
+
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -117,10 +118,6 @@ button {
 button.clicked {
     transform: scale(0.8);
 }
-
-/*button:hover {
-    transform: scale(1.1);
-}*/
 
 .nonnumber {
     background-color: var(--tertiary-button);
@@ -163,45 +160,4 @@ button.clicked {
 
 .fa-github:hover {
     transform: scale(1.2);
-}
-
-@media (max-width: 1200px) {
-    .main {
-      justify-content: center;
-    }
-}
-  
-@media (max-width: 850px) {
-.main {
-    gap: 50px;
-}
-
-.buttons {
-    width: 150px;
-    gap: 16px;
-}
-
-.pick-size {
-    margin-bottom: -4px;
-}
-
-.calculator {
-    width: 400px;
-    height: 400px;
-}
-}
-
-@media (max-width: 650px) {
-.title {
-    font-size: 50px;
-}
-
-.main {
-    flex-direction: column-reverse;
-}
-
-.calculator {
-    width: 300px;
-    height: 300px;
-}
 }
