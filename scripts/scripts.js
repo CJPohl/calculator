@@ -1,11 +1,15 @@
+// CLEAN UP CODE
+
 // default settings
 const DEFAULT_SCREEN = '0';
+const DEFAULT_PREVIOUS_VALUE = '';
 
 let currentScreen = DEFAULT_SCREEN;
 let operation;
-let previousValue;
+let previousValue = DEFAULT_PREVIOUS_VALUE;
 let currentValue;
 let currentOperator;
+let currentNumb;
 
 // global variables
 const clearBtn = document.getElementById('clear');
@@ -27,6 +31,7 @@ const zeroBtn = document.getElementById('zero');
 const decimalBtn = document.getElementById('decimal');
 const equalsBtn = document.getElementById('equals');
 const buttons = document.querySelectorAll('.buttons');
+const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
 
 const dashboard = document.querySelector('.dashboard');
@@ -44,6 +49,13 @@ function clearScreen() { // function to clear calculator screen
     screen.textContent = '';
     currentScreen = DEFAULT_SCREEN;
     createScreen();
+}
+
+function clearAll() {
+    clearScreen()
+    currentNumb = '';
+    previousValue = '';
+    operation = '';
 }
 
 function checkLength() { // function to check screen size capacity
@@ -72,25 +84,27 @@ function changeQuality() {
 }
 
 function storePrevValue() {
-    previousValue = currentScreen;
-    if (currentScreen == ' ') {
-        operate();
+    if (previousValue !== '') {
+        operate()
+        previousValue = operation.toString();
+        clearScreen();
+        
     }
-    clearScreen();
+    else {
+        previousValue = currentNumb;
+        clearScreen();
+    }
+    
 }
 
-function storeCurrValue() {
-    currentValue = currentScreen;
+function storeNumb() {
+    currentNumb = currentScreen;
+}
+
+function showResults() {
     operate();
-}
-
-function clearCurrValue() {
-    currentValue = ' ';
-}
-
-function updateVariables() {
-    previousValue = currentScreen;
-    clearCurrValue();
+    currentScreen = operation.toString();
+    updateScreen();
 }
 
 function setCurrentOperator(e) {
@@ -99,20 +113,18 @@ function setCurrentOperator(e) {
 
 function operate() {
     if (currentOperator == 'divide') {
-        divide(previousValue, currentValue);
+        divide(previousValue, currentNumb);
     }
     if (currentOperator == 'multiply') {
-        multiply(previousValue, currentValue);
+        multiply(previousValue, currentNumb);
     }
     if (currentOperator == 'subtract') {
-        subtract(previousValue, currentValue);
+        subtract(previousValue, currentNumb);
     }
     if (currentOperator == 'add') {
-        add(previousValue, currentValue);
+        add(previousValue, currentNumb);
     }
 }
-
-
 
 function divide(a, b) {
     if (b == '0') {
@@ -121,33 +133,29 @@ function divide(a, b) {
     }
     else {
         operation = a / b;
-        toString(operation);  
+        roundNum(operation);  
     }
 }
 
 function multiply(a, b) {
     operation = a * b;
-    toString(operation);
+    roundNum(operation);
 }
 
 function subtract(a, b) {
     operation = a - b;
-    toString(operation);
+    roundNum(operation);
 }
 
 function add(a, b) {
     a = parseInt(a);
     b = parseInt(b);
     operation = a + b;
-    toString(operation);
+    roundNum(operation);
 }
 
-function toString(operation) {
+function roundNum(operation) {
     operation = Math.round(operation*1000000000000)/1000000000000;
-    operation = operation.toString();
-    currentScreen = operation;
-    updateVariables();
-    updateScreen();
 }
 
 function update7() {
@@ -219,7 +227,7 @@ function clickButton(e) { // function for button clicks
 
 // onload
 window.onload = function() {
-    clearBtn.addEventListener('click', clearScreen);
+    clearBtn.addEventListener('click', clearAll);
     plusMinusBtn.addEventListener('click', changeQuality);
     sevenBtn.addEventListener('click', update7);
     eightBtn.addEventListener('click', update8);
@@ -232,8 +240,9 @@ window.onload = function() {
     threeBtn.addEventListener('click', update3);
     zeroBtn.addEventListener('click', update0);
     decimalBtn.addEventListener('click', updateDecimal);
-    equalsBtn.addEventListener('click', storeCurrValue);
+    equalsBtn.addEventListener('click', showResults);
     buttons.forEach(button => button.addEventListener('click', clickButton));
+    numbers.forEach(number => number.addEventListener('click', storeNumb));
     operators.forEach(operator => operator.addEventListener('click', storePrevValue));
     operators.forEach(operator => operator.addEventListener('click', setCurrentOperator));
     createScreen();
